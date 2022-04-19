@@ -36,20 +36,15 @@ import Transaction from "../models/transactions";
     try {
       const { id } = req.params;
       const { body } = req;
+      const transaction = await Transaction.findOneAndUpdate({transactionID:id},body).lean()
+      console.log(transaction)
 
-      return res.status(200).json("update trans");
+      if(!transaction){
+        return res.status(404).json("Ocorreu um erro ao atualizar a transação. Tente novamente");  
+      }
+      return res.status(200).json("Transação atualizada com sucesso");
     } catch (error) {
-      return res.status(400).json("Falha ao atualizar a transação");
-    }
-  }
-
-  export const updateTransactionProperty = async(req:Request, res:Response):Promise<void|any>=> {
-    try {
-      const { id } = req.params;
-      const { body } = req;
-
-      return res.status(200).json("update specific property trans");
-    } catch (error) {
+      console.log(error)
       return res.status(400).json("Falha ao atualizar a transação");
     }
   }
