@@ -10,7 +10,7 @@ width: 15rem;
 
       margin-right: 0.5rem;
     }
-    
+
   }
 .btn-primary{
   &:active,&:hover,&:focus,&:visited,&:focus,&:focus-visible{
@@ -18,4 +18,27 @@ width: 15rem;
     color: black;
     border-color: #cfc8c8;
   }
+}
+.filter-container{
+  margin-top: 2.5rem;
+  padding: 2.6rem;
+  height: 22rem;
+  background: #FAFAFA;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.row{
+  .col{
+    &.vertical-line{
+
+
+      width: 1px;
+          background-color: silver;
+          float: left;
+          border: 2px ridge silver ;
+          border-radius: 2px;
+    }
+
+  }
+
 }
