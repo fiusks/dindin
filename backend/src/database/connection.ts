@@ -1,18 +1,16 @@
-import mongoose from "mongoose";
-const mongoDB = 'mongodb://localhost:27017/transactions';
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const dbConnection = ()=>{
-    try {
-        mongoose.connect(mongoDB,()=>{
-            console.log("DB connected")
-        });
-        
-    } catch (error) {
-        console.log(error)
-    }
-    mongoose.connection.on('error',err=>{
-        console.log(err)
-    })
-}
-
-export default dbConnection;
+const knex = require("knex")({
+    client: "pg",
+    version: "^8.7.1",
+    connection: {
+      host: process.env.DB_HOST,
+      port: 5432,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    },
+  });
+  
+  export default knex
