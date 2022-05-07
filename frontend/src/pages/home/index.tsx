@@ -1,15 +1,28 @@
 import './style.scss';
-import { Row, Col, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import Filter from '../../components/filter';
-export default function Home() {
-  const [showFilter, setShowFilter] = useState(false);
+import TransactionTable from '../../components/transactionTable';
+import ResumeTransactions from '../../components/resumeTransactions';
 
+export default function Home() {
   return (
     <>
-      <Filter />
-      <Row>
-        <Col></Col>
+      <Row className="home-container">
+        <Col>
+          <Row>
+            <Col>
+              <Filter />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TransactionTable />
+            </Col>
+          </Row>
+        </Col>
+        <Col className="resume-col" md={12} lg={4} xl={4} xxl={3}>
+          <ResumeTransactions />
+        </Col>
       </Row>
     </>
   );
