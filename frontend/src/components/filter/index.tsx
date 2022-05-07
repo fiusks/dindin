@@ -1,25 +1,29 @@
-import './style.scss';
+import './styles.scss';
 import { Row, Col, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { TransactionContext } from '../../contexts/transactionContext';
+import { TransactionContextType } from '../../@types/transactions';
+import { FilterContextType } from '../../@types/filters';
+import { FilterContext } from '../../contexts/filterContext';
 import filterIcon from '../../assets/images/filter-icon.svg';
-import FilterElement from '../filter-category';
+import FilterElement from '../filterElement';
 
-interface Filter {
-  filterName: string;
-  value: number | boolean;
-}
 export default function Filter() {
   const [showFilter, setShowFilter] = useState(false);
+  const { showFilteredTransactions } = useContext(
+    TransactionContext
+  ) as TransactionContextType;
+  const { filters, setActiveFilters } = useContext(
+    FilterContext
+  ) as FilterContextType;
+  const [minValue, setMinValue] = useState('');
+  const [maxValue, setMaxValue] = useState('');
 
-  const filterByValue = [
-    { filterName: 'minValue', value: 0 },
-    { filterName: 'maxValue', value: 0 },
-  ];
+  useEffect(() => {
+    const updateFilterList = { ...filters, minValue, maxValue };
+    setActiveFilters(updateFilterList);
+  }, [minValue, maxValue]);
 
-  const filterList: Filter[] = [];
-
-  const [filters, setFilters] = useState(filterList);
-  console.log(filters);
   return (
     <Row>
       <Col>
@@ -35,18 +39,33 @@ export default function Filter() {
             <Col>
               <FilterElement
                 filterTitle="Dia da Semana"
-                setFilters={setFilters}
+                filterList={filters.weekday}
               />
             </Col>
             <Col>
-              {/* <FilterElement
+              <FilterElement
                 filterTitle="Categoria"
-                setFilters={setFilters}
-                filters={filters}
-              /> */}
+                filterList={filters.categories}
+              />
             </Col>
-            <Col></Col>
-            <Col>dia da semana</Col>
+            <Col className="filterByValue">
+              <h6>Valor</h6>
+              <div className="minMax-filter-container">
+                <label>Min</label>
+                <input
+                  onChange={(e) => setMinValue(e.target.value)}
+                  value={minValue}
+                />
+                <label>Max</label>
+                <input
+                  onChange={(e) => setMaxValue(e.target.value)}
+                  value={maxValue}
+                />
+              </div>
+            </Col>
+            <Col>
+              <Button onClick={showFilteredTransactions}>Aplicar Filtro</Button>
+            </Col>
           </Row>
         )}
       </Col>

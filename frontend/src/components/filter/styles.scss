@@ -42,3 +42,19 @@ width: 15rem;
   }
 
 }
+.filterByValue{
+  display: flex;
+  flex-direction: column;
+  .minMax-filter-container{
+    display: flex;
+    flex-direction: column;
+    label{
+      margin: 0.5rem 0rem;
+    }
+    input{
+      width: 6.2rem;
+
+    }
+}
+
+}
