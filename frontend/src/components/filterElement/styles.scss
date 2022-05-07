@@ -1,0 +1,23 @@
+.grid {
+  margin-top: 2rem;
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1px;
+	grid-template-rows: repeat(4, auto);
+
+  Button{
+   all: unset;
+   display: flex;
+   justify-content: space-between;
+   vertical-align: middle;
+   background: #fafafa;
+   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   padding: 0.4rem 0.8rem;
+   width: 8rem;
+   margin-bottom: 0.9rem;
+   &.selected{
+    background-color: tomato;
+   }
+  }
+}
