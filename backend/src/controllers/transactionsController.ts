@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import knex from'../database/connection'
 import { RequestTransaction,TransactionDocument} from '../models/transactions'
+import dayjs from "dayjs";
+import { RequestFilter } from "../models/filters";
 
   export const listAllTransactions = async (req:Request, res:Response)=> {
     try {
-      const transaction = await knex("transactions")
-      return res.status(200).json(transaction);
+      const transactions:TransactionDocument[] = await knex("transactions")
+      transactions.map((transaction)=>{
+       transaction.date=dayjs(transaction.date).format('YYYY-MM-DD').toString()
+      })
+      
+      return res.status(200).json(transactions);
 
     } catch (error) {
       console.log(error)
@@ -58,7 +64,7 @@ import { RequestTransaction,TransactionDocument} from '../models/transactions'
       const {date,description,amount,category,type} = req.body
 
       const updatedTransaction = {
-        date:new Date(date),
+        date:date,
         description,
         amount:amount,
         category,
@@ -68,26 +74,30 @@ import { RequestTransaction,TransactionDocument} from '../models/transactions'
       await knex("transactions").where({id}).update(updatedTransaction)
 
       
-      return res.status(200).json("Transação atualizada com sucesso");
+      return res.status(200).json({message:"Transação atualizada com sucesso"});
     } catch (error) {
       console.log(error)
       return res.status(400).json("Falha ao atualizar a transação");
     }
   }
 
-  export const listFilteredTransactions = async (req:Request,res:Response)=>{
+  export const listFilteredTransactions = async (req:RequestFilter,res:Response)=>{
+    
     try {
-      const {categories,minValue,maxValue,days} = req.body
+      const {categories,minValue,maxValue,weekday} = req.body
+      const statelessCategories = categories.map((category)=>category.filterValue)
+      
       let filteredList:TransactionDocument[] =[]
       if(categories.length!==0){
         if(minValue && maxValue){
-          filteredList = await knex("transactions").whereIn('category',categories).andWhereBetween('amount',[minValue,maxValue])
+          filteredList = await knex("transactions").whereIn('category',statelessCategories).andWhereBetween('amount',[minValue,maxValue])
         }else if(minValue){
-          filteredList = await knex("transactions").whereIn('category',categories).andWhere('amount',">",minValue)
+          filteredList = await knex("transactions").whereIn('category',statelessCategories).andWhere('amount',">",minValue)
         }else if(maxValue){
-          filteredList = await knex("transactions").whereIn('category',categories).andWhere('amount',"<",maxValue)
+          filteredList = await knex("transactions").whereIn('category',statelessCategories).andWhere('amount',"<",maxValue)
         }else{
-          filteredList = await knex("transactions").whereIn('category',categories)
+          
+          filteredList = await knex("transactions").whereIn('category',statelessCategories)
         }
       }else{
         if(minValue && maxValue){
@@ -100,20 +110,22 @@ import { RequestTransaction,TransactionDocument} from '../models/transactions'
           filteredList = await knex("transactions")
         }
       }
-  
       
-     filteredList.map((transaction:TransactionDocument)=>{
-        transaction.weekDay = transaction.date.toLocaleDateString('pt-BR',{weekday:"long"}).replace('-feira',"").toLowerCase()
-      })
-      
-      if(days.length!==0){
-        filteredList=filteredList.filter((transaction:TransactionDocument)=>{
-          return days.find((day:string)=>day===transaction.weekDay)
+      if(weekday.length!==0){
+        filteredList.map((transaction)=>{
+          transaction.weekday = new Date(transaction.date).toLocaleDateString('pt-BR',{weekday:"long"}).replace('-feira',"").toLowerCase()
+          
+        })
+        
+        filteredList=filteredList.filter((transaction)=>{
+          return weekday.find((day)=>day.filterValue?.toLowerCase()===transaction.weekday)
         }
-        )}else[]
-
-
-      
+        )}
+        
+        filteredList.map((transaction)=>{
+          transaction.date=dayjs(transaction.date).format('YYYY-MM-DD').toString()
+         })
+         
       return res.status(200).json(filteredList);
 
     } catch (error) {
