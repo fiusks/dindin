@@ -31,7 +31,8 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc & node .",
-    "dev": "nodemon --watch src --ext ts,json --exec node -r ts-node/register src/app.ts"
+    "dev": "nodemon --watch src --ext ts,json --exec node -r ts-node/register src/app.ts",
+    "postinstall": "tsc"
   },
   "keywords": [],
   "author": "",
