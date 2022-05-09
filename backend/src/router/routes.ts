@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 const routes = Router()
-import {listAllTransactions,createTransaction,deleteTransaction,updateTransaction,listFilteredTransactions} from '../controllers/TransactionsController';
+import {listAllTransactions,createTransaction,deleteTransaction,updateTransaction,listFilteredTransactions} from '../controllers/transactionsController';
 
 
 routes.get('/transactions', listAllTransactions);
