@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use(express.json());
 
-log.info(`Server listing at http://${process.env.HOST}:${process.env.PORT}`)
+log.info(`Server listing at http://${process.env.HOST}:${process.env.PORT||3001}`)
 
 app.use(routes);
 
