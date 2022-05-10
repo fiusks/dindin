@@ -1,24 +1,17 @@
 .filter-btn{
+  all:unset;
   background: #FAFAFA;
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   color: black;
-width: 15rem;
-  border-color: #FAFAFA;
+  padding: 0.8rem 3rem;
   font-size: 2rem;
-    img{
-
-      margin-right: 0.5rem;
-    }
-
-  }
-.btn-primary{
-  &:active,&:hover,&:focus,&:visited,&:focus,&:focus-visible{
-    background-color: #FAFAFA;
-    color: black;
-    border-color: #cfc8c8;
+  text-align: center;
+  img{
+    margin-right: 0.5rem;
   }
 }
+
 .filter-container{
   margin-top: 2.5rem;
   padding: 2.6rem;
@@ -26,35 +19,54 @@ width: 15rem;
   background: #FAFAFA;
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-}
-.row{
-  .col{
-    &.vertical-line{
+  .filters-action-btn{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    gap:1.6rem;
 
+    button{
+      all: unset;
+      cursor: pointer;
+      box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 1rem 1.3rem;
 
-      width: 1px;
-          background-color: silver;
-          float: left;
-          border: 2px ridge silver ;
-          border-radius: 2px;
+      &.apply-filters-btn{
+        background: linear-gradient(264.83deg, #3A9FF1 -3.28%, #05EDE3 100%);
+        color: white;
+      }
+      &.remove-filters-btn{
+        background: #FAFAFA;
+        color: black;
+      }
     }
-
   }
 
-}
-.filterByValue{
-  display: flex;
-  flex-direction: column;
-  .minMax-filter-container{
+  .filterByValue{
     display: flex;
     flex-direction: column;
-    label{
-      margin: 0.5rem 0rem;
-    }
-    input{
-      width: 6.2rem;
+    h6{
+      font-family: 'Rubik';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
 
+      color: #B9B9B9;
     }
+    .minMax-filter-container{
+      display: flex;
+      flex-direction: column;
+      label{
+        margin: 0.5rem 0rem;
+      }
+      input{
+        width: 6.2rem;
+      }
+    }
+  }
 }
 
-}
