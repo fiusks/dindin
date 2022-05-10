@@ -1,5 +1,5 @@
 import './styles.scss';
-import { Button } from 'react-bootstrap';
+
 import { useContext } from 'react';
 import { FilterContextType, IFiltersTransactions } from '../../@types/filters';
 import { FilterContext } from '../../contexts/filterContext';
@@ -18,19 +18,20 @@ export default function FilterElement({ filterTitle, filterList }: Props) {
 
   return (
     <>
-      <h6>{filterTitle}</h6>
+      <h6 className="filter-title">{filterTitle}</h6>
       <div className="grid">
         {filterList.map((filter) => {
           return (
-            <Button
+            <button
               key={filter.filterValue}
               onClick={() => handleFiltersButton(filter.filterValue!)}
               className={filter.state ? 'selected' : ''}
             >
-              <span>{filter.filterValue}</span>
-
-              <span>+</span>
-            </Button>
+              <div className="filter-text">
+                {filter.filterValue}
+                <span>+</span>
+              </div>
+            </button>
           );
         })}
       </div>
