@@ -9,7 +9,7 @@ export default function Layout() {
   return (
     <FilterProvider>
       <TransactionProvider>
-        <Container fluid className="p-0 layout-container">
+        <Container fluid className="layout-container">
           <Row className="layout-header">
             <Col>
               <div className="header-container">
@@ -18,7 +18,7 @@ export default function Layout() {
               </div>
             </Col>
           </Row>
-          <Row className="layout-body">
+          <Row className="w-100 layout-body">
             <Col>
               <Outlet />
             </Col>
