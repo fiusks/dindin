@@ -27,28 +27,28 @@ export default function Filter() {
   return (
     <Row>
       <Col>
-        <Button
+        <button
           className="filter-btn"
           onClick={() => setShowFilter(!showFilter)}
         >
           <img src={filterIcon} alt="filter icon" className="img-fluid" />
           Filtrar
-        </Button>
+        </button>
         {showFilter && (
           <Row className="filter-container">
-            <Col>
+            <Col md={3}>
               <FilterElement
                 filterTitle="Dia da Semana"
                 filterList={filters.weekday}
               />
             </Col>
-            <Col>
+            <Col md={3}>
               <FilterElement
                 filterTitle="Categoria"
                 filterList={filters.categories}
               />
             </Col>
-            <Col className="filterByValue">
+            <Col md={2} className="filterByValue">
               <h6>Valor</h6>
               <div className="minMax-filter-container">
                 <label>Min</label>
@@ -64,7 +64,20 @@ export default function Filter() {
               </div>
             </Col>
             <Col>
-              <Button onClick={showFilteredTransactions}>Aplicar Filtro</Button>
+              <div className="filters-action-btn">
+                <button
+                  className="remove-filters-btn"
+                  onClick={showFilteredTransactions}
+                >
+                  Limpar Filtros
+                </button>
+                <button
+                  className="apply-filters-btn"
+                  onClick={showFilteredTransactions}
+                >
+                  Aplicar Filtros
+                </button>
+              </div>
             </Col>
           </Row>
         )}
