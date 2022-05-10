@@ -53,14 +53,16 @@
 
       &.credit{
         border-radius: 10px 0px 0px 10px;
+        &.selected{
+          background: linear-gradient(91.26deg, #05EDE3 0%, #3A9FF1 97.77%);
+        }
       }
       &.debit{
         border-radius: 0px 10px 10px 0px;
+        &.selected{
+          background: linear-gradient(91.66deg, #FA8C10 0%, #FF576B 90.32%);
+        }
       }
-      &.selected{
-        background: linear-gradient(91.26deg, #05EDE3 0%, #3A9FF1 97.77%);
-      }
-
     }
     }
     .submit-btn{
