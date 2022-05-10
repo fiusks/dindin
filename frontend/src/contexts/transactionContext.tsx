@@ -28,13 +28,16 @@ const TransactionProvider: FC<Props> = ({ children }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3001/transactions/`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(newTransaction),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PUBLIC_URL}/transactions/`,
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(newTransaction),
+        }
+      );
       const data = await response.json();
       if (data.message === 'Transação cadastrada com sucesso') {
         const newTransactionList = [...transactions, newTransaction];
@@ -54,12 +57,15 @@ const TransactionProvider: FC<Props> = ({ children }) => {
       (transaction: ITransaction) => transaction.id !== id
     );
     try {
-      const response = await fetch(`http://localhost:3001/transactions/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PUBLIC_URL}/transactions/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
       const data = await response.json();
       if (data.message === 'Transação excluída com sucesso') {
         setTransactions(newTransactionList);
@@ -73,13 +79,16 @@ const TransactionProvider: FC<Props> = ({ children }) => {
     const { id } = updateTransaction;
 
     try {
-      const response = await fetch(`http://localhost:3001/transactions/${id}`, {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(updateTransaction),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PUBLIC_URL}/transactions/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(updateTransaction),
+        }
+      );
       const data = await response.json();
       if (data.message === 'Transação atualizada com sucesso') {
         showTransactions();
@@ -106,12 +115,15 @@ const TransactionProvider: FC<Props> = ({ children }) => {
   };
   const showTransactions = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/transactions/`, {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PUBLIC_URL}/transactions/`,
+        {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      );
       const transactions: ITransaction[] = await response.json();
       if (transactions.length !== 0) {
         setTransactions(transactions);
@@ -123,13 +135,16 @@ const TransactionProvider: FC<Props> = ({ children }) => {
   };
   const showFilteredTransactions = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/filtertransactions`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(activeFilters),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PUBLIC_URL}/filtertransactions`,
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(activeFilters),
+        }
+      );
       const filteredTransactions: ITransaction[] = await response.json();
       setTransactions(filteredTransactions);
     } catch (error) {
